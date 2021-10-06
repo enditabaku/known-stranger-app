@@ -31,6 +31,11 @@ export const InnerContainer = styled.View`
   align-items: center;
 `;
 
+
+export const ScrollContainer = styled.View`
+  flex-direction: row;
+`;
+
 export const WelcomeContainer = styled(InnerContainer)`
   padding: 25px;
   padding-top: 10px;
@@ -126,12 +131,13 @@ export const RightIcon = styled.TouchableOpacity`
 
 
 export const CategoryButton = styled.TouchableOpacity`
-  padding: 15px;
+  padding: 10px 45px;
   background-color: ${primary};
   justify-content: center;
   align-items: center;
   border-radius: 5px;
-  margin-vertical: 5px;
+  margin-vertical: 10px;
+  margin-horizontal: 30px;
   height: 70px;
 `;
 
@@ -169,10 +175,10 @@ export const MsgBox = styled.Text`
 `;
 
 export const Line = styled.View`
-  height: 1px;
+  height: 2px;
   width: 100%;
   background-color: ${darkLight};
-  margin-vertical: 10px;
+  margin-vertical: 50px;
 `;
 
 export const StyledFormArea = styled.View`

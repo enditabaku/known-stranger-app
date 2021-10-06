@@ -1,15 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { ImageBackground, View, Text, ScrollView } from 'react-native';
+import { ImageBackground, View, Text, ScrollView, SafeAreaView, Dimensions, StyleSheet } from 'react-native';
+import { SearchBar } from 'react-native-elements';
 import {
   PageTitle,
   StyledFormArea,
+  ScrollContainer,
   StyledButton,
   InnerContainer,
   WelcomeContainer,
   ButtonText,
   Line,
   CategoryButton,
+  Colors,
 } from './../components/styles';
+
+//colors
+const { darkLight,  primary, lightOrange } = Colors;
+
 // api client
 import axios from 'axios';
 
@@ -19,6 +26,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // credentials context
 import { CredentialsContext } from './../components/CredentialsContext';
 
+let search = 'testtest'
 const Categories = () => {
   const [categoriesElem, setCategories] = useState([]);
   // credentials context
@@ -49,14 +57,33 @@ const Categories = () => {
       .catch((error) => console.log(error));
   };
 
-  return (
-    <>
-    <ImageBackground source={require('../assets/img/noah-background-cat.jpg')} resizeMode='cover' style={{width: '100%', height: '100%'}}>
+  const updateSearch = () => {
+    alert("search pastaj:");
+    alert(window.pageYOffset);
+  };
 
+  return (
+    <SafeAreaView >
+      <ScrollView >
+    <>
+    <ImageBackground source={require('../assets/img/noah-background-cat.jpg')} resizeMode='cover' style={{ width : (Dimensions.get('window').width )}}>
       <InnerContainer>
         <WelcomeContainer>
           <PageTitle welcome={true}>Categories</PageTitle>
-
+         
+           <Text>{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}</Text>
+           <View style = {{width: '95%', marginBottom: 10, flex: 'flex-end'}}>
+           <SearchBar
+              placeholder="Search Category..."
+              onChangeText={updateSearch}
+              searchIcon = {{size: 22}}
+              value = {search}
+              style = {{width: "60%"}}
+              containerStyle={{backgroundColor: '#fff', borderWidth: 0, borderRadius: 10, borderColor: '#000', borderBottomColor: '#e8e8e8', borderTopColor: '#e8e8e8', padding: 0, width: '80%'}}
+              inputStyle={{backgroundColor: '#fff'}}
+              inputContainerStyle={{backgroundColor: '#fff', borderWidth: 0, borderRadius: 10, padding: 0,}}
+          />
+          </View>
           {(categoriesElem.length === 0) ? (
                <View>
                  <CategoryButton>
@@ -64,22 +91,29 @@ const Categories = () => {
                  </CategoryButton>
               </View>
           ) : (
-                <View>
-                  <ScrollView>
+                <ScrollContainer>
                   <>
                   {categoriesElem.map((n, i)=>(
                         <View key={i}>
                           <CategoryButton>
                             <Text>{n.Name}</Text>
                           </CategoryButton>
-                          {/* <Text>{n.Name}</Text>
-                          <Text>{n.HaveLink}</Text>
-                          <Text>{n.Id}</Text> */}
+                          <CategoryButton>
+                            <Text>{n.Name}</Text>
+                          </CategoryButton>
+                          <CategoryButton>
+                            <Text>{n.Name}</Text>
+                          </CategoryButton>
+                          <CategoryButton>
+                            <Text>{n.Name}</Text>
+                          </CategoryButton>
+                          <CategoryButton>
+                            <Text>{n.Name}</Text>
+                          </CategoryButton>
                         </View>
                    ))}
                   </>
-                  </ScrollView>
-                </View>
+                </ScrollContainer>
           )}
 
           <StyledFormArea>
@@ -92,10 +126,22 @@ const Categories = () => {
       </InnerContainer>
 </ImageBackground> 
     </>
+    </ScrollView>
+    </SafeAreaView>
   );
 
 
 
 };
+
+const styles = StyleSheet.create({
+  linearGradient: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 5,
+    height: 200,
+    width: 350,
+  },
+})
 
 export default Categories;

@@ -1,5 +1,5 @@
 <<<<<<< HEAD
-# noah-controls
+# NOAH Controls
 An automation company that services major corporation and small manufacturing shop
 =======
 # Noah Controls 
@@ -8,11 +8,14 @@ The system contains the login page as the first screen, and then based on the lo
 
 ## Built With
 * [Expo](https://docs.expo.io/)
-* [React Native](https://reactnative.dev/)
+* [React Native](https://reactnative.dev/) 
+
 For Back-End:
 * [.NET Web APIs with C#](https://dotnet.microsoft.com/apps/aspnet/apis)
+
 For Database:
 * [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
 
 ## Notes
+
 >>>>>>> e4ee4f3 (First commit-added login)
