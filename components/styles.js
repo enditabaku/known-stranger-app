@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { View, Text, TouchableOpacity, TextInput, Image } from 'react-native';
 import Constants from 'expo-constants';
 const StatusBarHeight = Constants.statusBarHeight;
-
 // colors
 export const Colors = {
   primary: '#f5f5f5',
@@ -29,6 +28,17 @@ export const InnerContainer = styled.View`
   width: 100%;
   flex: 1;
   align-items: center;
+  ${(props) =>
+    props.categories &&
+    `
+    align-items: flex-start;
+  `};
+  ${(props) =>
+    props.links &&
+    `
+    align-items: flex-start;
+    margin-bottom: 60px;
+  `};
 `;
 
 
@@ -43,40 +53,35 @@ export const WelcomeContainer = styled(InnerContainer)`
 `;
 
 export const PageLogo = styled.Image`
-  width: 45%;
+  width: 40%;
   height: 20px;
   margin-bottom: 5px;
-`;
-
-export const Avatar = styled.Image`
-  width: 100px;
-  height: 100px;
-  margin: auto;
-  border-radius: 50px;
-  border-width: 2px;
-  border-color: ${secondary};
-  margin-bottom: 10px;
-  margin-top: 10px;
 `;
 
 export const WelcomeImage = styled.Image`
   height: 50%;
   min-width: 100%;
 `;
-
+//Page title: Categories and Links options
 export const PageTitle = styled.Text`
   font-size: 38px;
   text-align: center;
   font-weight: 500;
   color: ${Colors.primary};
-  padding: 0px 40px;
+  padding: 0px 20px;
   ${(props) =>
     props.categories &&
     `
+    padding: 40px 0px 7px 0px;
     color: ${Colors.tertiary};
-    position: absolute;
-    top: 6%;
-    left: 0%;
+    font-size: 42px;
+    font-weight: 700;
+  `};
+  ${(props) =>
+    props.links &&
+    `
+    color: ${Colors.primary};
+    padding: 35px 0px 70px 50px;
     font-size: 42px;
     font-weight: 700;
   `},
@@ -142,13 +147,61 @@ export const CategoryButton = styled.TouchableOpacity`
   margin-vertical: 10px;
   margin-horizontal: 5%;
   height: 60px;
-
+  ${(props) =>
+    props.nothingtoshow == true &&
+    `
+    padding: 20px 80px;
+    margin-horizontal: 7%;
+    margin-vertical: 20px;
+    width: 100%;
+  `}
 `;
 
 export const CategoryText = styled.Text`
   color: ${tertiary};
   font-size: 15px;
   font-weight: 500;
+  ${(props) =>
+    props.nothingtoshow == true &&
+    `
+    color: ${tertiary};
+    opacity: 0.7;
+  `}
+`;
+
+export const LinkButton = styled.TouchableOpacity`
+  padding: 6px;
+  width:100%;
+  background-color: #eaeaeaa1;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  border: 1px solid ${lightOrange};
+  margin-vertical: 10px;
+  margin-horizontal: 5%;
+  height: 60px;
+  ${(props) =>
+    props.nothingtoshow == true &&
+    `
+    padding: 20px 80px;
+    margin-horizontal: 7%;
+    margin-vertical: 20px;
+    width: 100%;
+  `}
+
+`;
+
+
+export const LinkText = styled.Text`
+  color: ${tertiary};
+  font-size: 15px;
+  font-weight: 500;
+  ${(props) =>
+    props.nothingtoshow == true &&
+    `
+    color: ${tertiary};
+    opacity: 0.7;
+  `}
 `;
 
 export const StyledButton = styled.TouchableOpacity`
@@ -159,7 +212,6 @@ export const StyledButton = styled.TouchableOpacity`
   border-radius: 5px;
   margin-vertical: 5px;
   height: 60px;
-
   ${(props) =>
     props.logout == true &&
     `
@@ -189,6 +241,7 @@ export const Line = styled.View`
   width: 100%;
   background-color: #bababa50;
   margin-vertical: 30px;
+  margin-horizontal: 20px;
 `;
 
 export const StyledFormArea = styled.View`

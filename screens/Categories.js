@@ -16,22 +16,16 @@ import {
   Colors
 } from './../components/styles';
 import { useNavigation } from '@react-navigation/native';
-import Links from '../screens/Links'
 // icon
 import { MaterialIcons   } from '@expo/vector-icons';
-
 //colors
 const {primary } = Colors;
-
 // api client
 import axios from 'axios';
-
 // Async storage
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 // credentials context
 import { CredentialsContext } from './../components/CredentialsContext';
-
 const Categories = (nav) => {
   const navigation = useNavigation();
   let [categoriesElem, setCategories] = useState([]);
@@ -44,7 +38,7 @@ const Categories = (nav) => {
   //Api URL for getting current user categories
   const url = 'http://noah-app.projects.pragmatic.al/api/links/categoryIndex?token='+token;
   useEffect(() =>{
-    getCategories();
+    searchFilterFunction();
   }, []);
   //get all categories for the logged in user
   const getCategories = async () => {
@@ -58,6 +52,7 @@ const Categories = (nav) => {
   };
   //user searches for a category in the search box
   const searchFilterFunction = (text) => {
+    getCategories();
     searchedCategories = [];
     // Check if searched text is not blank
     if (text) {
@@ -76,7 +71,7 @@ const Categories = (nav) => {
     }
      categoriesElem = searchedCategories;
      console.log(searchedCategories, 'searcheddddd2');
-     console.log(categoriesElem, 'categoriesElem1');
+     console.log(categoriesElem, 'catttd1');
   };
   //user clicks log out button
   const clearLogin = () => {
@@ -86,59 +81,57 @@ const Categories = (nav) => {
       })
       .catch((error) => console.log(error));
   };
-
-
   return (  
     <>
  <StatusBar style="dark" />
  <ImageBackground source={require('../assets/img/noah-background-cat.jpg')} resizeMode='stretch' style={{ width : '100%', height: (Dimensions.get('screen').height )}}>   
-   <SafeAreaView >
+   <SafeAreaView>
     <ScrollView > 
       <InnerContainer>
-        <WelcomeContainer>
+        <WelcomeContainer categories={true}>
           <PageTitle categories={true}>Categories</PageTitle>        
-           <Text>{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}</Text>
+           <Text>{"\n"}</Text>
            {/* View for the Search Box - needs a margin bottom 10 + flex: 'flex-end'*/}
-           <View style = {{width: '90%', }}>          
-             {/* TODO: Search Bar function to filter only searched categories */}
-            <SearchBar
-              placeholder="Search Category..."
-              onChangeText={(text) => searchFilterFunction(text)}
-              onClear={(text) => searchFilterFunction('')}
-              searchIcon = {{size: 22}}
-              value = {search}
-              style = {{width: '100%'}}
-              containerStyle={{backgroundColor: '#bababa50', borderWidth: 0, borderRadius: 10, borderColor: '#000', borderBottomColor: 'transparent', borderTopColor: 'transparent', padding: 0, width: '100%'}}
-              inputStyle={{backgroundColor: '#fff'}}
-              inputContainerStyle={{backgroundColor: '#fff', borderWidth: 0, borderRadius: 10, padding: 2,}}
-            />
-            <Text>{"\n"}</Text>
-          </View>
-
-          {(categoriesElem.length === 0) ? (
-               <View>
-                 <CategoryButton>
-                    <Text>There are no categories</Text>
-                 </CategoryButton>
-              </View>
-          ) : (
-                <ScrollContainer>
-                  <>
-                  {categoriesElem.map((n, i)=>(
-                        <View key={i}>
+           {(categoriesElem.length === 0) ? (
+              <>
+                <View>
+                   <CategoryButton nothingtoshow={true}>
+                       <CategoryText nothingtoshow={true}>There are no categories</CategoryText>
+                   </CategoryButton>
+                </View>
+              </>
+            ) : (
+              <>
+                <View style = {{width: '90%', marginLeft: 20 }}>          
+                    {/* TODO: Search Bar function to filter only searched categories */}
+                    <SearchBar
+                      placeholder="Search Category..."
+                      onChangeText={(text) => searchFilterFunction(text)}
+                      onClear={(text) => searchFilterFunction('')}
+                      searchIcon = {{size: 22}}
+                      value = {search}
+                      style = {{width: '100%'}}
+                      containerStyle={{backgroundColor: '#bababa50', borderWidth: 1, borderRadius: 10, borderColor: '#bababa50', borderBottomColor: '#bababa50', borderTopColor: '#bababa50', padding: 0, width: '100%'}}
+                      inputStyle={{backgroundColor: '#fff'}}
+                      inputContainerStyle={{backgroundColor: '#fff', borderWidth: 0, borderRadius: 10, padding: 1,}}
+                    />
+                    <Text>{"\n"}</Text>
+                  </View>
+                  <ScrollContainer>
+                    <>
+                    {categoriesElem.map((n, i)=>(
+                       <View key={i}>
                           <TouchableOpacity>
-                          <CategoryButton  onPress={() => {
-                             alert(n.Id);
-                             navigation.navigate( 'Links', {id:n.Id})
-                          }}>
-                            <CategoryText>{n.Name}+{n.Id}</CategoryText>
-                          </CategoryButton>
+                            <CategoryButton onPress={() => { navigation.navigate( 'Links', {Id:n.Id}) }}>
+                               <CategoryText>{n.Name}</CategoryText>
+                            </CategoryButton>
                           </TouchableOpacity>
-                        </View>
-                   ))}
-                  </>
-                </ScrollContainer>
-          )}
+                       </View>
+                     ))}
+                     </>
+                    </ScrollContainer>
+               </>
+             )}
           <StyledFormArea>
             <Line />
             <StyledButton onPress={clearLogin} logout={true}>
@@ -148,16 +141,10 @@ const Categories = (nav) => {
           </StyledFormArea>
         </WelcomeContainer>
       </InnerContainer>
-
       </ScrollView>
     </SafeAreaView>
     </ImageBackground> 
     </>
- 
   );
-
-
-
 };
-
 export default Categories;

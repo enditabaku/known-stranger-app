@@ -147,7 +147,7 @@ const Login = ({ navigation }) => {
         </InnerContainer>
       </StyledContainer>       
     </KeyboardAvoidingWrapper>
-    <PageLogo source={require('../assets/img/noah-logo.png')} />
+    <PageLogo source={require('../assets/img/noah-logo2.png')} />
 </ImageBackground>
  );
 
