@@ -13,7 +13,6 @@ import {
   CategoryText,
   Colors
 } from './../components/styles';
-import { useNavigation } from '@react-navigation/native';
 
 // api client
 import axios from 'axios';
