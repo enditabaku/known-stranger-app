@@ -16,6 +16,11 @@ For Back-End:
 For Database:
 * [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
 
+## Screenshots
+![Screenshots](assets/img/Login-screen.png)
+![Screenshots](assets/img/Categories-screen.png)
+![Screenshots](assets/img/Links-screen.png)
+
 ## Notes
 
 >>>>>>> e4ee4f3 (First commit-added login)

@@ -215,12 +215,12 @@ export const StyledButton = styled.TouchableOpacity`
   ${(props) =>
     props.logout == true &&
     `
-    padding: 10px;
+    padding: 8px;
     background-color: ${orange};
     flex-direction: row;
     justify-content: flex-start;
     border-radius: 10px;
-    border: 2px solid ${orange};
+    border: 1px solid ${orange};
     width:30%;
   `}
 `;
