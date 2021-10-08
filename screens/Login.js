@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { StatusBar } from 'expo-status-bar';
 // formik
 import { Formik } from 'formik';
+// styles
 import {
   StyledContainer,
   PageLogo,
@@ -18,13 +19,14 @@ import {
   MsgBox,
   Colors,
 } from './../components/styles';
+
 import { View, ActivityIndicator, ImageBackground } from 'react-native';
 
 //colors
 const { darkLight,  primary, lightOrange } = Colors;
 
 // icon
-import { Octicons, Fontisto, Ionicons } from '@expo/vector-icons';
+import { Octicons, Ionicons } from '@expo/vector-icons';
 
 // keyboard avoiding view
 import KeyboardAvoidingWrapper from './../components/KeyboardAvoidingWrapper';
@@ -47,21 +49,23 @@ const Login = ({ navigation }) => {
   // credentials context
   const {storedCredentials, setStoredCredentials} = useContext(CredentialsContext);
 
+  //login button is clicked: check if credentials are correct
   const handleLogin = (credentials, setSubmitting) => {
     handleMessage(null);
+    //noah url api for login 
     const url = 'http://noah-app.projects.pragmatic.al/api/user/login';
     axios
-      .post(url, credentials)
+      .post(url, credentials) //post method to send entered credentials and check for them (if they are valid)
       .then((response) => {
-        const result = response.data;
+        const result = response.data; //store data in result
         if((credentials['username'] !== undefined) && (credentials['password']!== undefined)){
-          persistLogin(result);
+          persistLogin(result); //if credentials are found go to persistLogin function ↓
         }
         setSubmitting(false);
       })
       .catch((error) => {
         setSubmitting(false);
-        handleMessage('An error occurred. Check your credentials or network and try again');
+        handleMessage('An error occurred. Check your credentials or network and try again'); //Message to user on error cases
       });
   };
 
@@ -70,18 +74,17 @@ const Login = ({ navigation }) => {
     setMessageType(type);
   };
 
-  // Persisting login
+  // Persisting login: After axios post request ↑
   const persistLogin = (credentials, message, status) => {
     AsyncStorage.setItem('noahCredentials', JSON.stringify(credentials))
       .then(() => {
         handleMessage(message, status);
-        setStoredCredentials(credentials);
+        setStoredCredentials(credentials); //store credentials
       })
       .catch((error) => {
         console.log(error);
       });
   };
-
 
 
   return (

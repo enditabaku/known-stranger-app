@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { ImageBackground, View, Text, ScrollView, SafeAreaView, Dimensions, StyleSheet } from 'react-native';
+import { ImageBackground, View, Text, ScrollView, SafeAreaView, Dimensions, TouchableOpacity } from 'react-native';
 import { SearchBar } from 'react-native-elements';
+import { StatusBar } from 'expo-status-bar';
 import {
   PageTitle,
   StyledFormArea,
@@ -11,11 +12,16 @@ import {
   ButtonText,
   Line,
   CategoryButton,
-  Colors,
+  CategoryText,
+  Colors
 } from './../components/styles';
+import { useNavigation } from '@react-navigation/native';
+import Links from '../screens/Links'
+// icon
+import { MaterialIcons   } from '@expo/vector-icons';
 
 //colors
-const { darkLight,  primary, lightOrange } = Colors;
+const {primary } = Colors;
 
 // api client
 import axios from 'axios';
@@ -26,64 +32,89 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // credentials context
 import { CredentialsContext } from './../components/CredentialsContext';
 
-let search = 'testtest'
-const Categories = () => {
-  const [categoriesElem, setCategories] = useState([]);
+const Categories = (nav) => {
+  const navigation = useNavigation();
+  let [categoriesElem, setCategories] = useState([]);
+  const [search, setSearch] = useState('');
+  let searchedCategories = categoriesElem;
   // credentials context
   const { storedCredentials, setStoredCredentials } = useContext(CredentialsContext);
-
   //getting the token of the logged in user
   const token = storedCredentials["token"];
-
   //Api URL for getting current user categories
   const url = 'http://noah-app.projects.pragmatic.al/api/links/categoryIndex?token='+token;
-
- useEffect(() =>{
+  useEffect(() =>{
     getCategories();
   }, []);
+  //get all categories for the logged in user
   const getCategories = async () => {
     try {
       const response = await axios.get(url);
       setCategories(response.data.ListOfCategories);
+
     } catch(error) {
       alert('An error occurred, please try again', error);
     }
   };
+  //user searches for a category in the search box
+  const searchFilterFunction = (text) => {
+    searchedCategories = [];
+    // Check if searched text is not blank
+    if (text) {
+      // Inserted text is not blank
+      categoriesElem.forEach( function(cat){
+          if(cat.Name.toString().toLowerCase().includes(text.toLowerCase())){
+            searchedCategories.push(cat);        
+          }
+          console.log(searchedCategories, 'searcheddddd1');
+      });
+      setSearch(text);
+    } else {
+      searchedCategories = categoriesElem;
+      // Inserted text is blank
+      setSearch(text);
+    }
+     categoriesElem = searchedCategories;
+     console.log(searchedCategories, 'searcheddddd2');
+     console.log(categoriesElem, 'categoriesElem1');
+  };
+  //user clicks log out button
   const clearLogin = () => {
-    AsyncStorage.removeItem('noahCredentials')
+    AsyncStorage.removeItem('noahCredentials') //remove current credentials
       .then(() => {
         setStoredCredentials("");
       })
       .catch((error) => console.log(error));
   };
 
-  const updateSearch = () => {
-    alert("search pastaj:");
-    alert(window.pageYOffset);
-  };
 
-  return (
-    <SafeAreaView >
-      <ScrollView >
+  return (  
     <>
-    <ImageBackground source={require('../assets/img/noah-background-cat.jpg')} resizeMode='cover' style={{ width : (Dimensions.get('window').width )}}>
+ <StatusBar style="dark" />
+ <ImageBackground source={require('../assets/img/noah-background-cat.jpg')} resizeMode='stretch' style={{ width : '100%', height: (Dimensions.get('screen').height )}}>   
+   <SafeAreaView >
+    <ScrollView > 
       <InnerContainer>
         <WelcomeContainer>
-          <PageTitle welcome={true}>Categories</PageTitle>
-         
-           <Text>{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}</Text>
-           <View style = {{width: '95%', marginBottom: 10, flex: 'flex-end'}}>
-           <SearchBar
+          <PageTitle categories={true}>Categories</PageTitle>        
+           <Text>{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}</Text>
+           {/* View for the Search Box - needs a margin bottom 10 + flex: 'flex-end'*/}
+           <View style = {{width: '90%', }}>          
+             {/* TODO: Search Bar function to filter only searched categories */}
+            <SearchBar
               placeholder="Search Category..."
-              onChangeText={updateSearch}
+              onChangeText={(text) => searchFilterFunction(text)}
+              onClear={(text) => searchFilterFunction('')}
               searchIcon = {{size: 22}}
               value = {search}
-              style = {{width: "60%"}}
-              containerStyle={{backgroundColor: '#fff', borderWidth: 0, borderRadius: 10, borderColor: '#000', borderBottomColor: '#e8e8e8', borderTopColor: '#e8e8e8', padding: 0, width: '80%'}}
+              style = {{width: '100%'}}
+              containerStyle={{backgroundColor: '#bababa50', borderWidth: 0, borderRadius: 10, borderColor: '#000', borderBottomColor: 'transparent', borderTopColor: 'transparent', padding: 0, width: '100%'}}
               inputStyle={{backgroundColor: '#fff'}}
-              inputContainerStyle={{backgroundColor: '#fff', borderWidth: 0, borderRadius: 10, padding: 0,}}
-          />
+              inputContainerStyle={{backgroundColor: '#fff', borderWidth: 0, borderRadius: 10, padding: 2,}}
+            />
+            <Text>{"\n"}</Text>
           </View>
+
           {(categoriesElem.length === 0) ? (
                <View>
                  <CategoryButton>
@@ -95,53 +126,38 @@ const Categories = () => {
                   <>
                   {categoriesElem.map((n, i)=>(
                         <View key={i}>
-                          <CategoryButton>
-                            <Text>{n.Name}</Text>
+                          <TouchableOpacity>
+                          <CategoryButton  onPress={() => {
+                             alert(n.Id);
+                             navigation.navigate( 'Links', {id:n.Id})
+                          }}>
+                            <CategoryText>{n.Name}+{n.Id}</CategoryText>
                           </CategoryButton>
-                          <CategoryButton>
-                            <Text>{n.Name}</Text>
-                          </CategoryButton>
-                          <CategoryButton>
-                            <Text>{n.Name}</Text>
-                          </CategoryButton>
-                          <CategoryButton>
-                            <Text>{n.Name}</Text>
-                          </CategoryButton>
-                          <CategoryButton>
-                            <Text>{n.Name}</Text>
-                          </CategoryButton>
+                          </TouchableOpacity>
                         </View>
                    ))}
                   </>
                 </ScrollContainer>
           )}
-
           <StyledFormArea>
             <Line />
             <StyledButton onPress={clearLogin} logout={true}>
-              <ButtonText>Logout</ButtonText>
+              <ButtonText>Logout  </ButtonText>
+              <MaterialIcons name="logout" size={18} color={primary} />
             </StyledButton>
           </StyledFormArea>
         </WelcomeContainer>
       </InnerContainer>
-</ImageBackground> 
-    </>
-    </ScrollView>
+
+      </ScrollView>
     </SafeAreaView>
+    </ImageBackground> 
+    </>
+ 
   );
 
 
 
 };
-
-const styles = StyleSheet.create({
-  linearGradient: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 5,
-    height: 200,
-    width: 350,
-  },
-})
 
 export default Categories;

@@ -2,6 +2,7 @@ import React from 'react';
 
 //colors
 import { Colors } from './../components/styles';
+//used colors
 const {primary, tertiary } = Colors;
 
 // React Navigation
@@ -11,6 +12,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 // screens
 import Login from './../screens/Login';
 import Categories from './../screens/Categories';
+import Links from './../screens/Links';
 
 const Stack = createStackNavigator();
 
@@ -36,6 +38,7 @@ const RootStack = () => {
             }}
           >
             {storedCredentials ? (
+              <>
               <Stack.Screen
                 options={{
                   headerTintColor: primary,
@@ -43,9 +46,12 @@ const RootStack = () => {
                 name="Categories"
                 component={Categories}
               />
+               <Stack.Screen name="Links" component={Links} />
+              </>
             ) : (
               <>
                 <Stack.Screen name="Login" component={Login} />
+               
               </>
             )}
           </Stack.Navigator>

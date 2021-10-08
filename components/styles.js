@@ -33,7 +33,7 @@ export const InnerContainer = styled.View`
 
 
 export const ScrollContainer = styled.View`
-  flex-direction: row;
+    width: 100%;
 `;
 
 export const WelcomeContainer = styled(InnerContainer)`
@@ -45,6 +45,7 @@ export const WelcomeContainer = styled(InnerContainer)`
 export const PageLogo = styled.Image`
   width: 45%;
   height: 20px;
+  margin-bottom: 5px;
 `;
 
 export const Avatar = styled.Image`
@@ -68,17 +69,17 @@ export const PageTitle = styled.Text`
   text-align: center;
   font-weight: 500;
   color: ${Colors.primary};
-  padding: 40px;
+  padding: 0px 40px;
   ${(props) =>
-    props.welcome &&
+    props.categories &&
     `
     color: ${Colors.tertiary};
     position: absolute;
-    top: 2%;
+    top: 6%;
     left: 0%;
     font-size: 42px;
     font-weight: 700;
-  `}
+  `},
 `;
 
 export const SubTitle = styled.Text`
@@ -131,14 +132,23 @@ export const RightIcon = styled.TouchableOpacity`
 
 
 export const CategoryButton = styled.TouchableOpacity`
-  padding: 10px 45px;
-  background-color: ${primary};
+  padding: 6px;
+  width: 90%;
+  background-color: #eaeaeaa1;
   justify-content: center;
   align-items: center;
   border-radius: 5px;
+  border: 1px solid ${lightOrange};
   margin-vertical: 10px;
-  margin-horizontal: 30px;
-  height: 70px;
+  margin-horizontal: 5%;
+  height: 60px;
+
+`;
+
+export const CategoryText = styled.Text`
+  color: ${tertiary};
+  font-size: 15px;
+  font-weight: 500;
 `;
 
 export const StyledButton = styled.TouchableOpacity`
@@ -175,10 +185,10 @@ export const MsgBox = styled.Text`
 `;
 
 export const Line = styled.View`
-  height: 2px;
+  height: 1px;
   width: 100%;
-  background-color: ${darkLight};
-  margin-vertical: 50px;
+  background-color: #bababa50;
+  margin-vertical: 30px;
 `;
 
 export const StyledFormArea = styled.View`
