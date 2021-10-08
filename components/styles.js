@@ -183,8 +183,8 @@ export const LinkButton = styled.TouchableOpacity`
   ${(props) =>
     props.nothingtoshow == true &&
     `
-    padding: 20px 80px;
-    margin-horizontal: 7%;
+    padding: 20px 100px;
+    margin-horizontal: 8%;
     margin-vertical: 20px;
     width: 100%;
   `}
