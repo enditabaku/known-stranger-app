@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { ImageBackground, View, Text, ScrollView, SafeAreaView, Dimensions, TouchableOpacity } from 'react-native';
+import { ImageBackground, View, Text, ScrollView, SafeAreaView, Dimensions, TouchableOpacity, Image } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { StatusBar } from 'expo-status-bar';
 import {
@@ -30,6 +30,7 @@ const Categories = (nav) => {
   const navigation = useNavigation();
   let [categoriesElem, setCategories] = useState([]);
   const [search, setSearch] = useState('');
+  const [loading, setLoading] = useState(false);
   let searchedCategories = categoriesElem;
   // credentials context
   const { storedCredentials, setStoredCredentials } = useContext(CredentialsContext);
@@ -38,40 +39,41 @@ const Categories = (nav) => {
   //Api URL for getting current user categories
   const url = 'http://noah-app.projects.pragmatic.al/api/links/categoryIndex?token='+token;
   useEffect(() =>{
-    searchFilterFunction();
+    getCategories();
   }, []);
   //get all categories for the logged in user
   const getCategories = async () => {
+    setLoading(true);
     try {
       const response = await axios.get(url);
       setCategories(response.data.ListOfCategories);
-
+      setTimeout(function(){
+      setLoading(false);
+      },700)
     } catch(error) {
       alert('An error occurred, please try again', error);
+      setLoading(false);
     }
   };
   //user searches for a category in the search box
-  const searchFilterFunction = (text) => {
-    getCategories();
+  const searchFilterFunction = (text) => { 
     searchedCategories = [];
     // Check if searched text is not blank
-    if (text) {
+     if (text) {
       // Inserted text is not blank
       categoriesElem.forEach( function(cat){
           if(cat.Name.toString().toLowerCase().includes(text.toLowerCase())){
             searchedCategories.push(cat);        
           }
-          console.log(searchedCategories, 'searcheddddd1');
       });
       setSearch(text);
     } else {
-      searchedCategories = categoriesElem;
+      //when the search field is empty show all categories
+      getCategories();
       // Inserted text is blank
       setSearch(text);
     }
-     categoriesElem = searchedCategories;
-     console.log(searchedCategories, 'searcheddddd2');
-     console.log(categoriesElem, 'catttd1');
+    setCategories(searchedCategories);
   };
   //user clicks log out button
   const clearLogin = () => {
@@ -91,18 +93,7 @@ const Categories = (nav) => {
         <WelcomeContainer categories={true}>
           <PageTitle categories={true}>Categories</PageTitle>        
            <Text>{"\n"}</Text>
-           {/* View for the Search Box - needs a margin bottom 10 + flex: 'flex-end'*/}
-           {(categoriesElem.length === 0) ? (
-              <>
-                <View>
-                   <CategoryButton nothingtoshow={true}>
-                       <CategoryText nothingtoshow={true}>There are no categories</CategoryText>
-                   </CategoryButton>
-                </View>
-              </>
-            ) : (
-              <>
-                <View style = {{width: '90%', marginLeft: 20 }}>          
+           <View style = {{width: '90%', marginLeft: 20 }}>          
                     {/* TODO: Search Bar function to filter only searched categories */}
                     <SearchBar
                       placeholder="Search Category..."
@@ -116,7 +107,20 @@ const Categories = (nav) => {
                       inputContainerStyle={{backgroundColor: '#fff', borderWidth: 0, borderRadius: 10, padding: 1,}}
                     />
                     <Text>{"\n"}</Text>
-                  </View>
+                  </View>           
+           {/* View for the Search Box - needs a margin bottom 10 + flex: 'flex-end'*/}
+           {(categoriesElem.length === 0) ? (
+              <>
+                <View>
+                   <CategoryButton nothingtoshow={true}>
+                       <CategoryText nothingtoshow={true}>There are no categories</CategoryText>
+                   </CategoryButton>
+                </View>
+              </>
+            ) : (
+              <>
+            {!loading ? (       
+                <>
                   <ScrollContainer>
                     <>
                     {categoriesElem.map((n, i)=>(
@@ -130,8 +134,17 @@ const Categories = (nav) => {
                      ))}
                      </>
                     </ScrollContainer>
+                </>
+                  ) :(
+                <View>
+                   <Image 
+                     source={require('../assets/img/dots.gif')}
+                     style={{ width : 200, height: 200, marginLeft: 80, marginTop:60}}
+                     />
+                </View>
+                  )}
                </>
-             )}
+           )}           
           <StyledFormArea>
             <Line />
             <StyledButton onPress={clearLogin} logout={true}>

@@ -24,7 +24,6 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "screenOrientation": "portrait",
       "package": "noah.mobile.android"
     },
     "web": {

@@ -15,61 +15,55 @@ import axios from 'axios';
 const Links = (Id) => {
   const [linksElem, setLinks] = useState([]);
   const [search, setSearch] = useState('');
+  const [loading, setLoading] = useState(false);
   const linkId = Id.route.params["Id"];
   const url = 'http://noah-app.projects.pragmatic.al/api/links/index?id='+ linkId;
+  let searchedLinks = linksElem;
    useEffect(() =>{
      getLinks();
    }, []);
   //get all links from the selected category
   const getLinks = async () => {
+    setLoading(true);
     try {
       const response = await axios.get(url);
       setLinks(response.data.ListOfLinks);
+      setTimeout(function(){
+      setLoading(false);
+      },700)
     } catch(error) {
       alert('An error occurred, please try again', error);
+      setLoading(false)
     }
   };
     //user searches for a category in the search box
     const searchFilterFunction = (text) => {
-      // getCategories();
-      // searchedCategories = [];
-      // // Check if searched text is not blank
-      // if (text) {
-      //   // Inserted text is not blank
-      //   categoriesElem.forEach( function(cat){
-      //       if(cat.Name.toString().toLowerCase().includes(text.toLowerCase())){
-      //         searchedCategories.push(cat);        
-      //       }
-      //       console.log(searchedCategories, 'searcheddddd1');
-      //   });
-      //   setSearch(text);
-      // } else {
-      //   searchedCategories = categoriesElem;
-      //   // Inserted text is blank
-      //   setSearch(text);
-      // }
-      //  categoriesElem = searchedCategories;
-      //  console.log(searchedCategories, 'searcheddddd2');
-      //  console.log(categoriesElem, 'catttd1');
+      searchedLinks = [];
+      // Check if searched text is not blank
+      if (text) {
+        // Inserted text is not blank
+        linksElem.forEach( function(link){
+            if(link.Name.toString().toLowerCase().includes(text.toLowerCase())){
+              searchedLinks.push(link);        
+            }
+        });
+        setSearch(text);
+      } else {
+        //when the search field is empty show all links
+        getLinks();
+        // Inserted text is blank
+        setSearch(text);
+      }
+       setLinks(searchedLinks);
     }; 
   return (
-    <ImageBackground source={require('../assets/img/links-page-01.png')} resizeMode='stretch' style={{ width : '100%', height: (Dimensions.get('screen').height )}}>
+    <ImageBackground source={require('../assets/img/links-page-02.png')} resizeMode='stretch' style={{ width : '100%', height: (Dimensions.get('screen').height )}}>
     <SafeAreaView>
       <ScrollView>
     <>  
       <InnerContainer>
         <WelcomeContainer links={true}>
           <PageTitle links={true}>Links</PageTitle>
-            {(linksElem.length === 0) ? (
-             <View>
-               <StyledFormArea>
-                <LinkButton links={true} nothingtoshow={true}>
-                  <LinkText nothingtoshow={true}>There are no links</LinkText>
-                </LinkButton>
-               </StyledFormArea>
-             </View>
-              ) : (
-    <>    
              {/* View for the Search Box*/}
              <View style = {{width: '90%', marginLeft: 20 }}>          
              {/* TODO: Search Bar function to filter only searched categories */}
@@ -86,21 +80,43 @@ const Links = (Id) => {
               />
               <Text>{"\n"}</Text>
               </View>
-              <StyledFormArea>
-                <ScrollContainer>
+
+            {(linksElem.length === 0) ? (
+             <View>
+               <StyledFormArea>
+                <LinkButton links={true} nothingtoshow={true}>
+                  <LinkText nothingtoshow={true}>There are no links</LinkText>
+                </LinkButton>
+               </StyledFormArea>
+             </View>
+              ) : (
+         <>    
+            {!loading ? (       
                 <>
-                {linksElem.map((n, i)=>(
-                      <View key={i}>
-                        <TouchableOpacity>
-                        <LinkButton onPress={ ()=>{ Linking.openURL(n.Url)}}>
-                          <LinkText>{n.Name}</LinkText>
-                        </LinkButton>
-                        </TouchableOpacity>
-                      </View>
-                 ))}
+                  <StyledFormArea>
+                    <ScrollContainer>
+                    <>
+                    {linksElem.map((n, i)=>(
+                          <View key={i}>
+                            <TouchableOpacity>
+                            <LinkButton onPress={ ()=>{ Linking.openURL(n.Url)}}>
+                              <LinkText>{n.Name}</LinkText>
+                            </LinkButton>
+                            </TouchableOpacity>
+                          </View>
+                    ))}
+                    </>
+                    </ScrollContainer>
+                  </StyledFormArea>
                 </>
-                </ScrollContainer>
-              </StyledFormArea>
+                  ) :(
+                <View>
+                   <Image 
+                     source={require('../assets/img/dots.gif')}
+                     style={{ width : 200, height: 200, marginLeft: 80, marginTop:60}}
+                     />
+                </View>
+                  )}
     </>
             )}
         </WelcomeContainer>
