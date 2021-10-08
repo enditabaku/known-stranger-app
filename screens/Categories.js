@@ -84,9 +84,7 @@ const Categories = (nav) => {
       .catch((error) => console.log(error));
   };
   return (  
-    <>
- <StatusBar style="dark" />
- <ImageBackground source={require('../assets/img/noah-background-cat.jpg')} resizeMode='stretch' style={{ width : '100%', height: (Dimensions.get('screen').height )}}>   
+ <ImageBackground source={require('../assets/img/noah-background-cat.jpg')} resizeMode='stretch' style={{ width : '100%', height: (Dimensions.get('window').height )}}>   
    <SafeAreaView>
     <ScrollView > 
       <InnerContainer>
@@ -157,7 +155,6 @@ const Categories = (nav) => {
       </ScrollView>
     </SafeAreaView>
     </ImageBackground> 
-    </>
   );
 };
 export default Categories;

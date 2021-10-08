@@ -57,7 +57,7 @@ const Links = (Id) => {
        setLinks(searchedLinks);
     }; 
   return (
-    <ImageBackground source={require('../assets/img/links-page-02.png')} resizeMode='stretch' style={{ width : '100%', height: (Dimensions.get('screen').height )}}>
+    <ImageBackground source={require('../assets/img/links-page-02.png')} resizeMode='stretch' style={{ width : '100%', height: (Dimensions.get('window').height )}}>
     <SafeAreaView>
       <ScrollView>
     <>  
