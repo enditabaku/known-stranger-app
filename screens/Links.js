@@ -62,8 +62,8 @@ const Links = (Id) => {
     }; 
   return (
     <ImageBackground source={require('../assets/img/links-page-02.png')} resizeMode='stretch' style={{ width : '100%', height: (Dimensions.get('window').height )}}>
-    <SafeAreaView>
-      <ScrollView>
+    <SafeAreaView keyboardShouldPersistTaps={'handled'}>
+      <ScrollView keyboardShouldPersistTaps={'handled'}>
       <>  
       <InnerContainer>
         <WelcomeContainer links={true}>

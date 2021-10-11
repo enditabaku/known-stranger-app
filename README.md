@@ -20,7 +20,9 @@ For Database:
 ![Screenshots](assets/img/Login-screen.png)
 ![Screenshots](assets/img/Categories-screen.png)
 ![Screenshots](assets/img/Links-screen.png)
-
+![Screenshots](assets/img/Loading.jpeg)
 ## Notes
-
+(Expo Build Duration)
+Build on android:  15-20 min 
+Build on ios:  4-5 min
 >>>>>>> e4ee4f3 (First commit-added login)

@@ -87,8 +87,8 @@ const Categories = (nav) => {
   };
   return (  
  <ImageBackground source={require('../assets/img/noah-background-cat.jpg')} resizeMode='stretch' style={{ width : '100%', height: (Dimensions.get('window').height )}}>   
-   <SafeAreaView>
-    <ScrollView > 
+   <SafeAreaView keyboardShouldPersistTaps={'handled'}>
+    <ScrollView keyboardShouldPersistTaps={'handled'}> 
       <InnerContainer>
         <WelcomeContainer categories={true}>
           <PageTitle categories={true}>Categories</PageTitle>        
