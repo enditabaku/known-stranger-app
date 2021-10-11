@@ -15,6 +15,7 @@ import axios from 'axios';
 const Links = (Id) => {
   const [linksElem, setLinks] = useState([]);
   const [search, setSearch] = useState('');
+  const [loadingPage, setLoadingPage] = useState(true);
   const [loading, setLoading] = useState(false);
   const linkId = Id.route.params["Id"];
   const url = 'http://noah-app.projects.pragmatic.al/api/links/index?id='+ linkId;
@@ -35,12 +36,15 @@ const Links = (Id) => {
       alert('An error occurred, please try again', error);
       setLoading(false)
     }
+    setLoadingPage(false);
   };
     //user searches for a category in the search box
     const searchFilterFunction = (text) => {
       searchedLinks = [];
+     
       // Check if searched text is not blank
       if (text) {
+        
         // Inserted text is not blank
         linksElem.forEach( function(link){
             if(link.Name.toString().toLowerCase().includes(text.toLowerCase())){
@@ -60,10 +64,21 @@ const Links = (Id) => {
     <ImageBackground source={require('../assets/img/links-page-02.png')} resizeMode='stretch' style={{ width : '100%', height: (Dimensions.get('window').height )}}>
     <SafeAreaView>
       <ScrollView>
-    <>  
+      <>  
       <InnerContainer>
         <WelcomeContainer links={true}>
           <PageTitle links={true}>Links</PageTitle>
+          {loadingPage? (
+          <>
+          <View>
+              <Image 
+                source={require('../assets/img/dots.gif')}
+                style={{ width : 200, height: 200, marginLeft: 80, marginTop:60}}
+              />
+          </View>
+          </>
+          ) : (
+            <>
              {/* View for the Search Box*/}
              <View style = {{width: '90%', marginLeft: 20 }}>          
              {/* TODO: Search Bar function to filter only searched categories */}
@@ -80,45 +95,46 @@ const Links = (Id) => {
               />
               <Text>{"\n"}</Text>
               </View>
-
-            {(linksElem.length === 0) ? (
-             <View>
-               <StyledFormArea>
-                <LinkButton links={true} nothingtoshow={true}>
-                  <LinkText nothingtoshow={true}>There are no links</LinkText>
-                </LinkButton>
-               </StyledFormArea>
-             </View>
-              ) : (
-         <>    
-            {!loading ? (       
-                <>
-                  <StyledFormArea>
-                    <ScrollContainer>
+              {(linksElem.length === 0) ? (
+              <View>
+                <StyledFormArea>
+                  <LinkButton links={true} nothingtoshow={true}>
+                    <LinkText nothingtoshow={true}>There are no links</LinkText>
+                  </LinkButton>
+                </StyledFormArea>
+              </View>
+                ) : (
+               <>    
+                {!loading ? (       
                     <>
-                    {linksElem.map((n, i)=>(
-                          <View key={i}>
-                            <TouchableOpacity>
-                            <LinkButton onPress={ ()=>{ Linking.openURL(n.Url)}}>
-                              <LinkText>{n.Name}</LinkText>
-                            </LinkButton>
-                            </TouchableOpacity>
-                          </View>
-                    ))}
+                      <StyledFormArea>
+                        <ScrollContainer>
+                        <>
+                        {linksElem.map((n, i)=>(
+                              <View key={i}>
+                                <TouchableOpacity>
+                                <LinkButton onPress={ ()=>{ Linking.openURL(n.Url)}}>
+                                  <LinkText>{n.Name}</LinkText>
+                                </LinkButton>
+                                </TouchableOpacity>
+                              </View>
+                        ))}
+                        </>
+                        </ScrollContainer>
+                      </StyledFormArea>
                     </>
-                    </ScrollContainer>
-                  </StyledFormArea>
-                </>
-                  ) :(
-                <View>
-                   <Image 
-                     source={require('../assets/img/dots.gif')}
-                     style={{ width : 200, height: 200, marginLeft: 80, marginTop:60}}
-                     />
-                </View>
-                  )}
-    </>
-            )}
+                    ) : (
+                      <View>
+                        <Image 
+                          source={require('../assets/img/dots.gif')}
+                          style={{ width : 200, height: 200, marginLeft: 80, marginTop:60}}
+                          />
+                      </View>
+                    )}
+               </>
+               )}
+          </>
+      )}
         </WelcomeContainer>
       </InnerContainer>
     </>

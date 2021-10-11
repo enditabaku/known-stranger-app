@@ -30,7 +30,8 @@ const Categories = (nav) => {
   const navigation = useNavigation();
   let [categoriesElem, setCategories] = useState([]);
   const [search, setSearch] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loadingPage, setLoadingPage] = useState(true);
+  const [loading, setLoading] = useState(true);
   let searchedCategories = categoriesElem;
   // credentials context
   const { storedCredentials, setStoredCredentials } = useContext(CredentialsContext);
@@ -54,6 +55,7 @@ const Categories = (nav) => {
       alert('An error occurred, please try again', error);
       setLoading(false);
     }
+    setLoadingPage(false);
   };
   //user searches for a category in the search box
   const searchFilterFunction = (text) => { 
@@ -91,7 +93,18 @@ const Categories = (nav) => {
         <WelcomeContainer categories={true}>
           <PageTitle categories={true}>Categories</PageTitle>        
            <Text>{"\n"}</Text>
-           <View style = {{width: '90%', marginLeft: 20 }}>          
+          {loadingPage? (
+          <>
+          <View>
+             <Image 
+                source={require('../assets/img/dots.gif')}
+                style={{ width : 200, height: 200, marginLeft: 80, marginTop:60}}
+              />
+          </View>
+          </>
+          ): (
+          <>
+            <View style = {{width: '90%', marginLeft: 20 }}>          
                     {/* TODO: Search Bar function to filter only searched categories */}
                     <SearchBar
                       placeholder="Search Category..."
@@ -105,7 +118,7 @@ const Categories = (nav) => {
                       inputContainerStyle={{backgroundColor: '#fff', borderWidth: 0, borderRadius: 10, padding: 1,}}
                     />
                     <Text>{"\n"}</Text>
-                  </View>           
+             </View>           
            {/* View for the Search Box - needs a margin bottom 10 + flex: 'flex-end'*/}
            {(categoriesElem.length === 0) ? (
               <>
@@ -150,6 +163,8 @@ const Categories = (nav) => {
               <MaterialIcons name="logout" size={18} color={primary} />
             </StyledButton>
           </StyledFormArea>
+</>
+)}
         </WelcomeContainer>
       </InnerContainer>
       </ScrollView>
