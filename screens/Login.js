@@ -23,7 +23,7 @@ import {
 import { View, ActivityIndicator, ImageBackground } from 'react-native';
 
 //colors
-const { darkLight,  primary, lightOrange } = Colors;
+const { primary, mustard, purple, babypink, panna, shadow} = Colors;
 
 // icon
 import { Octicons, Ionicons } from '@expo/vector-icons';
@@ -88,13 +88,12 @@ const Login = ({ navigation }) => {
 
 
   return (
-    <ImageBackground source={require('../assets/img/noah-bgorange.png')} resizeMode='cover' style={{width: '100%', height: '100%'}}>
+    <ImageBackground source={require('../assets/img/bg1.png')} resizeMode='cover' style={{width: '100%', height: '100%', zIndex: 0}}>
       <KeyboardAvoidingWrapper>       
        <StyledContainer>
         <StatusBar style="dark" />
         <InnerContainer>        
-          <PageTitle>NOAH Controls</PageTitle>
-          <SubTitle>Account Login</SubTitle>
+              {/* <PageLogo source={require('../assets/ks-logo-01.png')} /> */}
           <Formik
             initialValues={{ username: '', password: '' }}
             onSubmit={(values, { setSubmitting }) => {
@@ -105,26 +104,24 @@ const Login = ({ navigation }) => {
                 handleLogin(values, setSubmitting);
               }
             }}
+            
           >
             {({ handleChange, handleBlur, handleSubmit, values, isSubmitting }) => (
               <StyledFormArea>
                 <MyTextInput
-                  label="Email Address"
-                  placeholderTextColor={darkLight}
+                  label="Username"
+                  placeholderTextColor={primary}
                   onChangeText={handleChange('username')}
                   onBlur={handleBlur('username')}
                   value={values.username}
-                  keyboardType="email-address"
-                  icon="mail"
                 />
                 <MyTextInput
                   label="Password"
-                  placeholderTextColor={darkLight}
+                  placeholderTextColor={primary}
                   onChangeText={handleChange('password')}
                   onBlur={handleBlur('password')}
                   value={values.password}
                   secureTextEntry={hidePassword}
-                  icon="lock"
                   isPassword={true}
                   hidePassword={hidePassword}
                   setHidePassword={setHidePassword}
@@ -147,7 +144,7 @@ const Login = ({ navigation }) => {
         </InnerContainer>
       </StyledContainer>       
     </KeyboardAvoidingWrapper>
-    <PageLogo source={require('../assets/img/noah-logo2.png')} />
+
 </ImageBackground>
  );
 
@@ -157,9 +154,6 @@ const Login = ({ navigation }) => {
 const MyTextInput = ({ label, icon, isPassword, hidePassword, setHidePassword, ...props }) => {
   return (
     <View>
-      <LeftIcon>
-        <Octicons name={icon} size={20} color={lightOrange} />
-      </LeftIcon>
       <StyledInputLabel>{label}</StyledInputLabel>
       <StyledTextInput {...props} />
       {isPassword && (
@@ -168,7 +162,7 @@ const MyTextInput = ({ label, icon, isPassword, hidePassword, setHidePassword, .
             setHidePassword(!hidePassword);
           }}
         >
-          <Ionicons name={hidePassword ? 'md-eye-off' : 'md-eye'} size={20} color={lightOrange} />
+          <Ionicons name={hidePassword ? 'md-eye-off' : 'md-eye'} size={20} color={purple} />
         </RightIcon>
       )}
     </View>

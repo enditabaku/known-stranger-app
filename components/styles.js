@@ -4,30 +4,32 @@ import Constants from 'expo-constants';
 const StatusBarHeight = Constants.statusBarHeight;
 // colors
 export const Colors = {
-  primary: '#f5f5f5',
-  secondary: '#E5E7EB',
-  tertiary: '#071a47',
-  darkLight: '#9CA3AF',
-  brand: '#6D28D9',
-  success: '#69ff84',
-  warning: '#000',
-  lightOrange: '#f5dbd0',
-  orange: '#fc5e28',
+  primary: '#3B424B',
+  mustard: '#D3A537',
+  purple: '#9E7E99',
+  babypink: '#D1BCD6',
+  panna: '#F3EFE9',
+  shadow: '#F3EFE990',
+  lightprimary: '#3B424B80',
 };
 
-const { primary, secondary, tertiary, darkLight, brand, success, warning, lightOrange, orange } = Colors;
+const {primary, mustard, purple, babypink, panna, shadow, lightprimary} = Colors;
 
 
 export const StyledContainer = styled.View`
   flex: 1;
-  padding: 25px;
-  padding-top: ${StatusBarHeight + 80}px;
+  padding: 15px 25px;
+  padding-top: ${StatusBarHeight + 130}px;
 `;
 
 export const InnerContainer = styled.View`
   width: 100%;
   flex: 1;
   align-items: center;
+  background-color: ${shadow};
+  padding: 60px 20px 60px 20px;
+  border-radius: 15px;
+  border: 1px dashed ${lightprimary};
   ${(props) =>
     props.categories &&
     `
@@ -41,7 +43,6 @@ export const InnerContainer = styled.View`
   `};
 `;
 
-
 export const ScrollContainer = styled.View`
     width: 100%;
 `;
@@ -53,9 +54,9 @@ export const WelcomeContainer = styled(InnerContainer)`
 `;
 
 export const PageLogo = styled.Image`
-  width: 40%;
-  height: 20px;
-  margin-bottom: 5px;
+  width: 70%;
+  height: 90px;
+  margin-top: 10px;
 `;
 
 export const WelcomeImage = styled.Image`
@@ -73,7 +74,7 @@ export const PageTitle = styled.Text`
     props.categories &&
     `
     padding: 40px 0px 7px 0px;
-    color: ${Colors.tertiary};
+    color: ${Colors.mustard};
     font-size: 42px;
     font-weight: 700;
   `};
@@ -92,7 +93,7 @@ export const SubTitle = styled.Text`
   margin-bottom: 30px;
   letter-spacing: 1px;
   font-weight: 700;
-  color: ${tertiary};
+  color: ${mustard};
 
   ${(props) =>
     props.welcome &&
@@ -103,11 +104,9 @@ export const SubTitle = styled.Text`
 `;
 
 export const StyledTextInput = styled.TextInput`
-  padding: 15px;
-  padding-left: 55px;
-  padding-right: 55px;
+  padding: 10px 55px 10px 20px;
   border-radius: 10px;
-  border: 2px solid ${lightOrange};
+  border: 2px solid ${purple};
   font-size: 16px;
   height: 60px;
   margin-vertical: 3px;
@@ -116,7 +115,7 @@ export const StyledTextInput = styled.TextInput`
 `;
 
 export const StyledInputLabel = styled.Text`
-  color: ${lightOrange};
+  color: ${purple};
   font-size: 13px;
   text-align: left;
 `;
@@ -143,7 +142,7 @@ export const CategoryButton = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   border-radius: 5px;
-  border: 1px solid ${lightOrange};
+  border: 1px solid ${purple};
   margin-vertical: 10px;
   margin-horizontal: 5%;
   height: 60px;
@@ -158,13 +157,13 @@ export const CategoryButton = styled.TouchableOpacity`
 `;
 
 export const CategoryText = styled.Text`
-  color: ${tertiary};
+  color: ${mustard};
   font-size: 15px;
   font-weight: 500;
   ${(props) =>
     props.nothingtoshow == true &&
     `
-    color: ${tertiary};
+    color: ${mustard};
     opacity: 0.7;
   `}
 `;
@@ -176,7 +175,7 @@ export const LinkButton = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   border-radius: 5px;
-  border: 1px solid ${lightOrange};
+  border: 1px solid ${purple};
   margin-vertical: 10px;
   margin-horizontal: 5%;
   height: 60px;
@@ -193,20 +192,20 @@ export const LinkButton = styled.TouchableOpacity`
 
 
 export const LinkText = styled.Text`
-  color: ${tertiary};
+  color: ${mustard};
   font-size: 15px;
   font-weight: 500;
   ${(props) =>
     props.nothingtoshow == true &&
     `
-    color: ${tertiary};
+    color: ${mustard};
     opacity: 0.7;
   `}
 `;
 
 export const StyledButton = styled.TouchableOpacity`
   padding: 15px;
-  background-color: ${tertiary};
+  background-color: ${primary};
   justify-content: center;
   align-items: center;
   border-radius: 5px;
@@ -216,24 +215,24 @@ export const StyledButton = styled.TouchableOpacity`
     props.logout == true &&
     `
     padding: 8px;
-    background-color: ${orange};
+    background-color: ${purple};
     flex-direction: row;
     justify-content: flex-start;
     border-radius: 10px;
-    border: 1px solid ${orange};
+    border: 1px solid ${purple};
     width:30%;
   `}
 `;
 
 export const ButtonText = styled.Text`
-  color: ${primary};
+  color: ${panna};
   font-size: 16px;
 `;
 
 export const MsgBox = styled.Text`
   text-align: center;
   font-size: 13px;
-  color: ${props => props.type == "SUCCESS" ? success : tertiary};
+  color: ${props => props.type == "SUCCESS" ? purple : primary};
 `;
 
 export const Line = styled.View`
@@ -258,7 +257,7 @@ export const ExtraView = styled.View`
 export const ExtraText = styled.Text`
   justify-content: center;
   align-content: center;
-  color: ${tertiary};
+  color: ${mustard};
   font-size: 15px;
 `;
 
@@ -268,6 +267,6 @@ export const TextLink = styled.TouchableOpacity`
 `;
 
 export const TextLinkContent = styled.Text`
-  color: ${brand};
+  color: ${babypink};
   font-size: 15px;
 `;

@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "Noah Controls",
-    "slug": "noahcontrolsinc",
+    "name": "Known Stranger",
+    "slug": "knownstranger",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/ks-logo-01.png",
     "splash": {
-      "image": "./assets/splash-01.png",
+      "image": "./assets/ks-logo-01.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#F3EFE9"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -18,17 +18,17 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "noah.mobile.android"
+      "bundleIdentifier": "known-stranger"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/splash-01.png",
-        "backgroundColor": "#FFFFFF"
+        "foregroundImage": "./assets/ks-logo-01.png",
+        "backgroundColor": "#F3EFE9"
       },
-      "package": "noah.mobile.android"
+      "package": "known-stranger"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/ks-logo-01.png"
     }
   }
 }
