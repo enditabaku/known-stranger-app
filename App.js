@@ -13,7 +13,7 @@ export default function App() {
   const [storedCredentials, setStoredCredentials] = useState("");
   //check the credentials on login to store them 
   const checkLoginCredentials = () => {
-    AsyncStorage.getItem('noahControlsCredentials')
+    AsyncStorage.getItem('KSCredentials')
     .then((result) => {
       if(result!= null){
         setStoredCredentials(JSON.parse(result));

@@ -19,25 +19,15 @@ import {
   MsgBox,
   Colors,
 } from './../components/styles';
-
 import { View, ActivityIndicator, ImageBackground } from 'react-native';
-
 //colors
 const { primary, mustard, purple, babypink, panna, shadow} = Colors;
-
 // icon
 import { Octicons, Ionicons } from '@expo/vector-icons';
-
 // keyboard avoiding view
 import KeyboardAvoidingWrapper from './../components/KeyboardAvoidingWrapper';
-
-// api client
-import axios from 'axios';
-
-
 // Async storage
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 // credentials context
 import { CredentialsContext } from './../components/CredentialsContext';
 
@@ -52,21 +42,20 @@ const Login = ({ navigation }) => {
   //login button is clicked: check if credentials are correct
   const handleLogin = (credentials, setSubmitting) => {
     handleMessage(null);
-    //noah url api for login 
-    const url = 'http://noah-app.projects.pragmatic.al/api/user/login';
-    axios
-      .post(url, credentials) //post method to send entered credentials and check for them (if they are valid)
-      .then((response) => {
-        const result = response.data; //store data in result
-        if((credentials['username'] !== undefined) && (credentials['password']!== undefined)){
-          persistLogin(result); //if credentials are found go to persistLogin function ↓
-        }
+    const usernameCorrect = 'find.stranger';
+    const passwordCorrect = 'findStr@nger';
+    try{
+      if (credentials.username == usernameCorrect && credentials.password == passwordCorrect) {
+        persistLogin(credentials);
+         } else {
+        handleMessage('Your credentials are incorrect.'); //Message to user on incorrect credentials error
+         }
         setSubmitting(false);
-      })
-      .catch((error) => {
-        setSubmitting(false);
-        handleMessage('An error occurred. Check your credentials or network and try again'); //Message to user on error cases
-      });
+    }
+    catch(error){
+      setSubmitting(false);
+      handleMessage('An error occurred. Check your credentials or network and try again'); //Message to user on error cases
+    }
   };
 
   const handleMessage = (message, type = '') => {
@@ -74,9 +63,9 @@ const Login = ({ navigation }) => {
     setMessageType(type);
   };
 
-  // Persisting login: After axios post request ↑
+  // Persisting login: After credentials check ↑
   const persistLogin = (credentials, message, status) => {
-    AsyncStorage.setItem('noahCredentials', JSON.stringify(credentials))
+    AsyncStorage.setItem('KSCredentials', JSON.stringify(credentials))
       .then(() => {
         handleMessage(message, status);
         setStoredCredentials(credentials); //store credentials
