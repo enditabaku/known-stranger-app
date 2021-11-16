@@ -20,8 +20,6 @@ import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons   } from '@expo/vector-icons';
 //colors
 const {primary } = Colors;
-// api client
-import axios from 'axios';
 // Async storage
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // credentials context
@@ -39,44 +37,45 @@ const Categories = (nav) => {
   const token = storedCredentials["token"];
   //Api URL for getting current user categories
   const url = 'http://noah-app.projects.pragmatic.al/api/links/categoryIndex?token='+token;
-  useEffect(() =>{
-    getCategories();
-  }, []);
-  //get all categories for the logged in user
-  const getCategories = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.get(url);
-      setCategories(response.data.ListOfCategories);
-      setTimeout(function(){
-      setLoading(false);
-      },700)
-    } catch(error) {
-      alert('An error occurred, please try again', error);
-      setLoading(false);
-    }
-    setLoadingPage(false);
-  };
+  // useEffect(() =>{
+  //   getCategories();
+  // }, []);
+  // //get all categories for the logged in user
+  // const getCategories = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const response = await axios.get(url);
+  //     setCategories(response.data.ListOfCategories);
+  //     setTimeout(function(){
+  //     setLoading(false);
+  //     },700)
+  //   } catch(error) {
+  //     alert('An error occurred, please try again', error);
+  //     setLoading(false);
+  //   }
+  //   setLoadingPage(false);
+  // };
   //user searches for a category in the search box
-  const searchFilterFunction = (text) => { 
-    searchedCategories = [];
-    // Check if searched text is not blank
-     if (text) {
-      // Inserted text is not blank
-      categoriesElem.forEach( function(cat){
-          if(cat.Name.toString().toLowerCase().includes(text.toLowerCase())){
-            searchedCategories.push(cat);        
-          }
-      });
-      setSearch(text);
-    } else {
-      //when the search field is empty show all categories
-      getCategories();
-      // Inserted text is blank
-      setSearch(text);
-    }
-    setCategories(searchedCategories);
-  };
+  // const searchFilterFunction = (text) => { 
+  //   searchedCategories = [];
+  //   // Check if searched text is not blank
+  //    if (text) {
+  //     // Inserted text is not blank
+  //     categoriesElem.forEach( function(cat){
+  //         if(cat.Name.toString().toLowerCase().includes(text.toLowerCase())){
+  //           searchedCategories.push(cat);        
+  //         }
+  //     });
+  //     setSearch(text);
+  //   } else {
+  //     //when the search field is empty show all categories
+  //     getCategories();
+  //     // Inserted text is blank
+  //     setSearch(text);
+  //   }
+  //   setCategories(searchedCategories);
+  // };
+
   //user clicks log out button
   const clearLogin = () => {
     AsyncStorage.removeItem('noahCredentials') //remove current credentials
@@ -86,7 +85,7 @@ const Categories = (nav) => {
       .catch((error) => console.log(error));
   };
   return (  
- <ImageBackground source={require('../assets/img/noah-background-cat.jpg')} resizeMode='stretch' style={{ width : '100%', height: (Dimensions.get('window').height )}}>   
+ <ImageBackground source={require('../assets/img/bg2.png')} resizeMode='stretch' style={{ width : '100%', height: (Dimensions.get('window').height )}}>   
    <SafeAreaView keyboardShouldPersistTaps={'handled'}>
     <ScrollView keyboardShouldPersistTaps={'handled'}> 
       <InnerContainer>
@@ -97,7 +96,7 @@ const Categories = (nav) => {
           <>
           <View>
              <Image 
-                source={require('../assets/img/dots.gif')}
+                source={require('../assets/img/loaderpurple.gif')}
                 style={{ width : 200, height: 200, marginLeft: 80, marginTop:60}}
               />
           </View>

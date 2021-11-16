@@ -19,49 +19,49 @@ const Links = (Id) => {
   const [loading, setLoading] = useState(false);
   const linkId = Id.route.params["Id"];
   const url = 'http://noah-app.projects.pragmatic.al/api/links/index?id='+ linkId;
-  let searchedLinks = linksElem;
-   useEffect(() =>{
-     getLinks();
-   }, []);
-  //get all links from the selected category
-  const getLinks = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.get(url);
-      setLinks(response.data.ListOfLinks);
-      setTimeout(function(){
-      setLoading(false);
-      },700)
-    } catch(error) {
-      alert('An error occurred, please try again', error);
-      setLoading(false)
-    }
-    setLoadingPage(false);
-  };
+  // let searchedLinks = linksElem;
+  //  useEffect(() =>{
+  //    getLinks();
+  //  }, []);
+  // //get all links from the selected category
+  // const getLinks = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const response = await axios.get(url);
+  //     setLinks(response.data.ListOfLinks);
+  //     setTimeout(function(){
+  //     setLoading(false);
+  //     },700)
+  //   } catch(error) {
+  //     alert('An error occurred, please try again', error);
+  //     setLoading(false)
+  //   }
+  //   setLoadingPage(false);
+  // };
     //user searches for a category in the search box
-    const searchFilterFunction = (text) => {
-      searchedLinks = [];
+    // const searchFilterFunction = (text) => {
+    //   searchedLinks = [];
      
-      // Check if searched text is not blank
-      if (text) {
+    //   // Check if searched text is not blank
+    //   if (text) {
         
-        // Inserted text is not blank
-        linksElem.forEach( function(link){
-            if(link.Name.toString().toLowerCase().includes(text.toLowerCase())){
-              searchedLinks.push(link);        
-            }
-        });
-        setSearch(text);
-      } else {
-        //when the search field is empty show all links
-        getLinks();
-        // Inserted text is blank
-        setSearch(text);
-      }
-       setLinks(searchedLinks);
-    }; 
+    //     // Inserted text is not blank
+    //     linksElem.forEach( function(link){
+    //         if(link.Name.toString().toLowerCase().includes(text.toLowerCase())){
+    //           searchedLinks.push(link);        
+    //         }
+    //     });
+    //     setSearch(text);
+    //   } else {
+    //     //when the search field is empty show all links
+    //     getLinks();
+    //     // Inserted text is blank
+    //     setSearch(text);
+    //   }
+    //    setLinks(searchedLinks);
+    // }; 
   return (
-    <ImageBackground source={require('../assets/img/links-page-02.png')} resizeMode='stretch' style={{ width : '100%', height: (Dimensions.get('window').height )}}>
+    <ImageBackground source={require('../assets/img/bg1.png')} resizeMode='stretch' style={{ width : '100%', height: (Dimensions.get('window').height )}}>
     <SafeAreaView keyboardShouldPersistTaps={'handled'}>
       <ScrollView keyboardShouldPersistTaps={'handled'}>
       <>  
