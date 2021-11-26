@@ -29,11 +29,12 @@ export const InnerContainer = styled.View`
   background-color: ${shadow};
   padding: 60px 20px 60px 20px;
   border-radius: 15px;
-  border: 1px dashed ${lightprimary};
+  
   ${(props) =>
-    props.categories &&
+    props.Notes &&
     `
     align-items: flex-start;
+    border: 1px solid ${babypink};
   `};
   ${(props) =>
     props.links &&
@@ -63,7 +64,7 @@ export const WelcomeImage = styled.Image`
   height: 50%;
   min-width: 100%;
 `;
-//Page title: Categories and Links options
+//Page title: Notes and Links options
 export const PageTitle = styled.Text`
   font-size: 38px;
   text-align: center;
@@ -71,7 +72,7 @@ export const PageTitle = styled.Text`
   color: ${Colors.primary};
   padding: 0px 20px;
   ${(props) =>
-    props.categories &&
+    props.Notes &&
     `
     padding: 40px 0px 7px 0px;
     color: ${Colors.mustard};
@@ -136,36 +137,29 @@ export const RightIcon = styled.TouchableOpacity`
 
 
 export const CategoryButton = styled.TouchableOpacity`
-  padding: 6px;
+  padding: 16px;
   width: 90%;
-  background-color: #eaeaeaa1;
-  justify-content: center;
-  align-items: center;
+  background-color: #fff4e0;
   border-radius: 5px;
-  border: 1px solid ${purple};
-  margin-vertical: 10px;
+  border: 2px dotted ${mustard};
+  margin-vertical: 7px;
   margin-horizontal: 5%;
-  height: 60px;
-  ${(props) =>
-    props.nothingtoshow == true &&
-    `
-    padding: 20px 80px;
-    margin-horizontal: 7%;
-    margin-vertical: 20px;
-    width: 100%;
-  `}
+  height: 160px;
 `;
 
 export const CategoryText = styled.Text`
-  color: ${mustard};
-  font-size: 15px;
-  font-weight: 500;
-  ${(props) =>
-    props.nothingtoshow == true &&
-    `
-    color: ${mustard};
-    opacity: 0.7;
-  `}
+  color: ${primary};
+  font-size: 20px;
+  font-weight: 700;
+  font-style: italic;
+  padding-bottom: 4%;
+`;
+
+export const NotesDate = styled.Text`
+  color: ${lightprimary};
+  font-size: 16px;
+  font-weight: 600;
+  padding-top: 4%;
 `;
 
 export const LinkButton = styled.TouchableOpacity`

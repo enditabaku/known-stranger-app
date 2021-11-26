@@ -11,7 +11,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 // screens
 import Login from './../screens/Login';
-import Categories from './../screens/Categories';
+import Notes from './../screens/Notes';
 import Links from './../screens/Links';
 
 const Stack = createStackNavigator();
@@ -43,8 +43,8 @@ const RootStack = () => {
                 options={{
                   headerTintColor: primary,
                 }}
-                name="Categories"
-                component={Categories}
+                name="Notes"
+                component={Notes}
               />
                <Stack.Screen name="Links" component={Links} />
               </>

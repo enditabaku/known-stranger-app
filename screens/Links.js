@@ -10,15 +10,12 @@ import {
   LinkText,
   LinkButton,
 } from './../components/styles';
-// api client
-import axios from 'axios';
 const Links = (Id) => {
   const [linksElem, setLinks] = useState([]);
   const [search, setSearch] = useState('');
   const [loadingPage, setLoadingPage] = useState(true);
   const [loading, setLoading] = useState(false);
   const linkId = Id.route.params["Id"];
-  const url = 'http://noah-app.projects.pragmatic.al/api/links/index?id='+ linkId;
   // let searchedLinks = linksElem;
   //  useEffect(() =>{
   //    getLinks();
@@ -81,7 +78,7 @@ const Links = (Id) => {
             <>
              {/* View for the Search Box*/}
              <View style = {{width: '90%', marginLeft: 20 }}>          
-             {/* TODO: Search Bar function to filter only searched categories */}
+             {/* TODO: Search Bar function to filter only searched Notes */}
               <SearchBar
                 placeholder="Search Link..."
                 onChangeText={(text) => searchFilterFunction(text)}
