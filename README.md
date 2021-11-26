@@ -14,3 +14,4 @@ The system is not yet done!
 ## Screenshots
 ![Screenshots](assets/img/FirstScreen.png)
 ![Screenshots](assets/img/LoginScreen.png)
+![Screenshots](assets/img/NotesScreen.jpeg)
